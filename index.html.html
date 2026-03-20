@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAKE CHANNEL</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=DM+Sans:wght@300;400;600&family=Bungee+Shade&display=swap');
+
+:root {
+  --c1: #ff3cac;
+  --c2: #ffde03;
+  --c3: #00f5d4;
+  --c4: #ff6b35;
+  --c5: #7b2ff7;
+  --c6: #00cfff;
+  --bg: #0a0a0f;
+  --surface: #13131f;
+  --text: #ffffff;
+  --muted: #666680;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CURSOR */
+#cur { position:fixed; width:10px; height:10px; border-radius:50%; background:var(--c2); pointer-events:none; z-index:9999; mix-blend-mode:difference; transition:transform .15s; }
+#cur2 { position:fixed; width:32px; height:32px; border-radius:50%; border:1.5px solid rgba(255,222,3,.5); pointer-events:none; z-index:9998; transition:left .1s,top .1s; }
+
+/* PAGES */
+.page { display:none; min-height:100vh; }
+.page.active { display:block; }
+
+/* ─── NAV ─────────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0;
+  z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 48px;
+  background: rgba(10,10,15,0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.nav-logo {
+  font-family: 'Bungee', cursive;
+  font-size: 1.4rem;
+  letter-spacing: .1em;
+  background: linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.nav-btns { display:flex; gap:12px; align-items:center; }
+.nav-btn {
+  font-family:'DM Sans',sans-serif;
+  font-size:.7rem; font-weight:600;
+  letter-spacing:.15em; text-transform:uppercase;
+  padding:10px 24px; border:none; cursor:none;
+  transition:all .3s;
+}
+.nav-btn.outline {
+  background:transparent;
+  border:1.5px solid var(--muted);
+  color:var(--muted);
+}
+.nav-btn.outline:hover, .nav-btn.outline.active {
+  border-color:var(--c3); color:var(--c3);
+}
+.nav-btn.filled {
+  background: linear-gradient(135deg,var(--c1),var(--c5));
+  color:#fff;
+}
+.nav-btn.filled:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,60,172,.4); }
+
+/* ─── PAGE 1: HOME ────────────────────────── */
+#hero {
+  position:relative; min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; overflow:hidden; padding-top:80px;
+}
+
+#bg-canvas {
+  position:absolute; inset:0; width:100%; height:100%;
+}
+
+.hero-inner {
+  position:relative; z-index:10;
+  display:flex; flex-direction:column; align-items:center;
+  gap:32px; text-align:center; padding:40px;
+}
+
+
+
+/* Morph title */
+.morph-title-wrap {
+  opacity:0; animation: fadeUp .8s .5s forwards;
+}
+.morph-title {
+  font-family:'Bungee Shade', cursive;
+  font-size: clamp(2.8rem, 10vw, 7rem);
+  line-height:1;
+  background: linear-gradient(90deg, var(--c1) 0%, var(--c2) 25%, var(--c3) 50%, var(--c4) 75%, var(--c5) 100%);
+  background-size:300%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation: gradFlow 3s linear infinite, fadeUp .8s .5s forwards;
+  filter: drop-shadow(0 0 30px rgba(255,60,172,.4));
+}
+.morph-sub {
+  font-family:'Bungee',cursive;
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  letter-spacing:.3em;
+  color:rgba(255,255,255,.5);
+  margin-top:8px;
+}
+
+.hero-desc {
+  max-width:480px;
+  font-size:.9rem; line-height:1.8;
+  color:rgba(255,255,255,.6);
+  opacity:0; animation:fadeUp .8s .7s forwards;
+}
+
+.hero-btns {
+  display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+  opacity:0; animation:fadeUp .8s .9s forwards;
+}
+.big-btn {
+  font-family:'Bungee',cursive;
+  font-size:.75rem; letter-spacing:.15em;
+  padding:16px 36px; border:none; cursor:none;
+  transition:all .3s; text-decoration:none;
+  display:inline-block;
+}
+.big-btn-rainbow {
+  background: linear-gradient(135deg,var(--c1),var(--c4),var(--c2));
+  color:#000;
+  box-shadow:0 0 30px rgba(255,222,3,.3);
+}
+.big-btn-rainbow:hover { transform:translateY(-3px) scale(1.03); box-shadow:0 16px 50px rgba(255,60,172,.5); }
+.big-btn-outline {
+  background:transparent;
+  border:2px solid var(--c3);
+  color:var(--c3);
+}
+.big-btn-outline:hover { background:var(--c3); color:#000; transform:translateY(-3px); }
+
+
+
+/* Floating badges */
+.badges {
+  display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+  opacity:0; animation:fadeUp .8s 1.2s forwards;
+}
+.badge {
+  font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+  padding:6px 16px; border-radius:100px;
+  font-weight:600;
+}
+.badge:nth-child(1) { background:rgba(255,60,172,.15); border:1px solid var(--c1); color:var(--c1); }
+.badge:nth-child(2) { background:rgba(0,245,212,.15); border:1px solid var(--c3); color:var(--c3); }
+.badge:nth-child(3) { background:rgba(255,222,3,.15); border:1px solid var(--c2); color:var(--c2); }
+.badge:nth-child(4) { background:rgba(123,47,247,.15); border:1px solid var(--c5); color:var(--c5); }
+
+/* Scroll arrow */
+.scroll-arrow {
+  position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  opacity:0; animation:fadeUp 1s 1.5s forwards; z-index:10; cursor:none;
+}
+.scroll-arrow span { font-size:.55rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); }
+.arrow-line { width:1px; height:40px; background:linear-gradient(to bottom,var(--c3),transparent); animation:pulse 2s infinite; }
+
+/* ─── PAGE 2: ABOUT ───────────────────────── */
+#page2 { padding-top:80px; background:var(--bg); }
+
+.p2-hero {
+  min-height:60vh;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
+}
+#p2-canvas { position:absolute; inset:0; width:100%; height:100%; }
+
+.p2-content {
+  position:relative; z-index:10;
+  text-align:center; padding:60px 40px;
+}
+.p2-tag {
+  font-size:.6rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--c3); margin-bottom:16px;
+}
+.p2-title {
+  font-family:'Bungee',cursive;
+  font-size:clamp(2rem,6vw,5rem);
+  line-height:1.05;
+  margin-bottom:24px;
+}
+.p2-title span {
+  background:linear-gradient(90deg,var(--c2),var(--c4));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+
+/* Cards grid */
+.cards-section {
+  padding:80px 60px;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap:24px;
+  max-width:1100px; margin:0 auto;
+}
+.card {
+  background:var(--surface);
+  border:1px solid rgba(255,255,255,.06);
+  padding:36px 28px;
+  transition:all .4s;
+  position:relative; overflow:hidden;
+}
+.card::before {
+  content:''; position:absolute; inset:0;
+  opacity:0; transition:opacity .4s;
+}
+.card:nth-child(1)::before { background:radial-gradient(circle at 50% 0%,rgba(255,60,172,.1),transparent 70%); }
+.card:nth-child(2)::before { background:radial-gradient(circle at 50% 0%,rgba(0,245,212,.1),transparent 70%); }
+.card:nth-child(3)::before { background:radial-gradient(circle at 50% 0%,rgba(255,222,3,.1),transparent 70%); }
+.card:hover::before { opacity:1; }
+.card:hover { transform:translateY(-6px); border-color:rgba(255,255,255,.15); }
+
+.card-icon { font-size:2rem; margin-bottom:16px; }
+.card-title {
+  font-family:'Bungee',cursive;
+  font-size:1rem; letter-spacing:.08em;
+  margin-bottom:12px;
+}
+.card-text { font-size:.85rem; color:var(--muted); line-height:1.7; }
+
+/* CTA section */
+.cta-section {
+  padding:100px 60px;
+  text-align:center;
+  background:linear-gradient(135deg,rgba(255,60,172,.05),rgba(123,47,247,.05));
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.cta-title {
+  font-family:'Bungee Shade',cursive;
+  font-size:clamp(2rem,6vw,5rem);
+  background:linear-gradient(90deg,var(--c1),var(--c3),var(--c2));
+  background-size:200%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:gradFlow 3s linear infinite;
+  margin-bottom:24px;
+}
+.cta-text { font-size:.95rem; color:var(--muted); max-width:500px; margin:0 auto 40px; line-height:1.8; }
+.cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+
+/* ─── TICKER ──────────────────────────────── */
+.ticker {
+  width:100%; overflow:hidden;
+  padding:12px 0;
+  background:linear-gradient(90deg,var(--c1),var(--c5),var(--c3),var(--c4),var(--c2));
+  background-size:300%;
+  animation:gradFlow 4s linear infinite;
+}
+.ticker-inner { display:flex; animation:tickScroll 18s linear infinite; white-space:nowrap; }
+.ticker-item {
+  font-family:'Bungee',cursive;
+  font-size:.7rem; letter-spacing:.2em;
+  color:#000; padding:0 32px;
+  display:flex; align-items:center; gap:16px;
+}
+.ticker-dot { width:5px; height:5px; background:#000; border-radius:50%; opacity:.5; }
+
+/* ─── ANIMATIONS ──────────────────────────── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes gradFlow {
+  0% { background-position:0% 50%; }
+  100% { background-position:300% 50%; }
+}
+@keyframes tickScroll {
+  from { transform:translateX(0); }
+  to { transform:translateX(-50%); }
+}
+@keyframes pulse {
+  0%,100% { opacity:.3; }
+  50% { opacity:1; }
+}
+
+/* Responsive */
+@media(max-width:600px) {
+  nav { padding:16px 24px; }
+  .cards-section { padding:60px 24px; }
+  .cta-section { padding:60px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div id="cur"></div>
+<div id="cur2"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">🎂 CAKE CHANNEL</div>
+  <div class="nav-btns">
+    <button class="nav-btn outline active" onclick="showPage(1)">Home</button>
+    <button class="nav-btn outline" onclick="showPage(2)">About</button>
+    <button class="nav-btn filled" onclick="showPage(2)">Subscribe</button>
+  </div>
+</nav>
+
+<!-- ══ PAGE 1 ══════════════════════════════ -->
+<div class="page active" id="page1">
+  <section id="hero">
+    <svg id="bg-canvas" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <filter id="gblur"><feGaussianBlur stdDeviation="50"/></filter>
+        <filter id="gblur2"><feGaussianBlur stdDeviation="30"/></filter>
+      </defs>
+      <ellipse id="g1" cx="200" cy="300" rx="350" ry="300" fill="rgba(255,60,172,0.25)" filter="url(#gblur)"/>
+      <ellipse id="g2" cx="1100" cy="200" rx="400" ry="320" fill="rgba(0,245,212,0.2)" filter="url(#gblur)"/>
+      <ellipse id="g3" cx="700" cy="650" rx="380" ry="280" fill="rgba(255,222,3,0.15)" filter="url(#gblur)"/>
+      <ellipse id="g4" cx="900" cy="500" rx="300" ry="250" fill="rgba(123,47,247,0.18)" filter="url(#gblur)"/>
+      <path id="hm1" fill="none" stroke="#ff3cac" stroke-width="1.5" stroke-opacity="0.5"/>
+      <path id="hm2" fill="none" stroke="#00f5d4" stroke-width="1" stroke-opacity="0.4"/>
+      <path id="hm3" fill="rgba(255,222,3,0.05)" stroke="#ffde03" stroke-width="1" stroke-opacity="0.3"/>
+      <g id="sparks"></g>
+    </svg>
+
+    <div class="hero-inner">
+
+      <!-- Morph text -->
+      <div class="morph-title-wrap">
+        <div class="morph-title" id="morph-text">CAKE</div>
+        <div class="morph-sub">CHANNEL</div>
+      </div>
+
+      <p class="hero-desc">
+        Your exclusive premium content destination. Subscribe once, enjoy forever. New content uploaded daily.
+      </p>
+
+      <div class="hero-btns">
+        <button class="big-btn big-btn-rainbow" onclick="showPage(2)">🎂 Subscribe Now</button>
+        <button class="big-btn big-btn-outline" onclick="showPage(2)">Learn More</button>
+      </div>
+
+      <div class="badges">
+        <span class="badge">Daily Upload</span>
+        <span class="badge">Lifetime Access</span>
+        <span class="badge">Exclusive Content</span>
+        <span class="badge">Premium Quality</span>
+      </div>
+
+
+    </div>
+
+    <div class="scroll-arrow">
+      <span>Scroll</span>
+      <div class="arrow-line"></div>
+    </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-inner" id="ticker1"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 2 ══════════════════════════════ -->
+<div class="page" id="page2">
+  <section class="p2-hero">
+    <svg id="p2-canvas" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice">
+      <defs><filter id="pb"><feGaussianBlur stdDeviation="45"/></filter></defs>
+      <ellipse id="p2g1" cx="300" cy="350" rx="400" ry="300" fill="rgba(255,107,53,0.2)" filter="url(#pb)"/>
+      <ellipse id="p2g2" cx="1100" cy="200" rx="350" ry="280" fill="rgba(0,207,255,0.18)" filter="url(#pb)"/>
+      <path id="p2m1" fill="none" stroke="#ff6b35" stroke-width="1.5" stroke-opacity="0.5"/>
+      <path id="p2m2" fill="none" stroke="#00cfff" stroke-width="1" stroke-opacity="0.4"/>
+    </svg>
+    <div class="p2-content">
+      <p class="p2-tag">About Us</p>
+      <h2 class="p2-title">Why Choose<br><span>CAKE CHANNEL?</span></h2>
+    </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-inner" id="ticker2"></div>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards-section">
+    <div class="card">
+      <div class="card-icon">🎬</div>
+      <div class="card-title">Daily Content</div>
+      <p class="card-text">Fresh videos uploaded every single day at scheduled times. Never run out of content with our ever-growing library.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">♾️</div>
+      <div class="card-title">Lifetime Access</div>
+      <p class="card-text">Subscribe once and access everything forever. No recurring fees, no hidden charges — just unlimited access.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⭐</div>
+      <div class="card-title">Premium Quality</div>
+      <p class="card-text">High-definition, exclusive content curated and produced to the highest standard. Only the best makes it here.</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-title">JOIN TODAY</div>
+    <p class="cta-text">Become part of the CAKE CHANNEL family. Exclusive access, premium content, and a community that delivers.</p>
+    <div class="cta-btns">
+      <button class="big-btn big-btn-rainbow">🎂 Subscribe Now</button>
+      <button class="big-btn big-btn-outline" onclick="showPage(1)">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Cursor ────────────────────────────────────────────────
+const cur = document.getElementById('cur');
+const cur2 = document.getElementById('cur2');
+let mx=0,my=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX; my=e.clientY;
+  cur.style.left=mx-5+'px'; cur.style.top=my-5+'px';
+  setTimeout(()=>{ cur2.style.left=mx-16+'px'; cur2.style.top=my-16+'px'; },60);
+});
+document.querySelectorAll('button,a,label,.upload-trigger').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ cur.style.transform='scale(3)'; cur2.style.opacity='0'; });
+  el.addEventListener('mouseleave',()=>{ cur.style.transform='scale(1)'; cur2.style.opacity='1'; });
+});
+
+// ── Page switching ────────────────────────────────────────
+function showPage(n) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn.outline').forEach((b,i)=>b.classList.toggle('active',i===n-1));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+
+
+// ── Ticker ────────────────────────────────────────────────
+const words=['CAKE CHANNEL','Subscribe Now','Daily Uploads','Lifetime Access','Premium Quality','Exclusive Content'];
+['ticker1','ticker2'].forEach(id=>{
+  const track=document.getElementById(id);
+  [...words,...words,...words,...words].forEach(w=>{
+    const s=document.createElement('span');
+    s.className='ticker-item';
+    s.innerHTML=`${w}<span class="ticker-dot"></span>`;
+    track.appendChild(s);
+  });
+});
+
+// ── Morph text animation ──────────────────────────────────
+const morphWords=['CAKE','SWEET','FRESH','WILD','EPIC','PURE'];
+let mwi=0, morphT=0;
+setInterval(()=>{
+  mwi=(mwi+1)%morphWords.length;
+  const el=document.getElementById('morph-text');
+  el.style.transform='scaleY(0)';
+  el.style.opacity='0';
+  setTimeout(()=>{
+    el.textContent=morphWords[mwi];
+    el.style.transform='scaleY(1)';
+    el.style.opacity='1';
+  },300);
+},2500);
+document.getElementById('morph-text').style.transition='transform .3s ease,opacity .3s ease';
+
+// ── SVG helpers ───────────────────────────────────────────
+function makeBlob(cx,cy,r,n,t,amp){
+  const pts=[];
+  for(let i=0;i<n;i++){
+    const a=(i/n)*Math.PI*2;
+    const noise=Math.sin(a*2+t*.8)*amp+Math.sin(a*3-t*.5)*amp*.5+Math.sin(a*5+t*1.2)*amp*.25;
+    const rad=r+noise;
+    pts.push([cx+Math.cos(a)*rad,cy+Math.sin(a)*rad]);
+  }
+  return smooth(pts);
+}
+function smooth(pts){
+  const n=pts.length;
+  let d=`M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for(let i=0;i<n;i++){
+    const p0=pts[(i-1+n)%n],p1=pts[i],p2=pts[(i+1)%n],p3=pts[(i+2)%n];
+    const cp1x=p1[0]+(p2[0]-p0[0])/6,cp1y=p1[1]+(p2[1]-p0[1])/6;
+    const cp2x=p2[0]-(p3[0]-p1[0])/6,cp2y=p2[1]-(p3[1]-p1[1])/6;
+    d+=` C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  return d+'Z';
+}
+
+// Sparks
+const sparksG=document.getElementById('sparks');
+const sparkData=[];
+const sparkColors=['#ff3cac','#ffde03','#00f5d4','#ff6b35','#7b2ff7','#00cfff'];
+for(let i=0;i<40;i++){
+  const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+  const col=sparkColors[Math.floor(Math.random()*sparkColors.length)];
+  c.setAttribute('r',Math.random()*2+.5);
+  c.setAttribute('fill',col);
+  c.setAttribute('opacity',Math.random()*.7+.2);
+  sparksG.appendChild(c);
+  sparkData.push({el:c,x:Math.random()*1400,y:Math.random()*900,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,ph:Math.random()*Math.PI*2});
+}
+
+// ── Main animation loop ───────────────────────────────────
+let t=0;
+function loop(){
+  t+=0.009;
+
+  // Page 1 blobs
+  const hm1=document.getElementById('hm1');
+  const hm2=document.getElementById('hm2');
+  const hm3=document.getElementById('hm3');
+  if(hm1) hm1.setAttribute('d',makeBlob(280,450,240,18,t,80));
+  if(hm2) hm2.setAttribute('d',makeBlob(1050,250,200,14,t*.7+1,70));
+  if(hm3) hm3.setAttribute('d',makeBlob(700,600,170,12,t*1.3+2,55));
+
+  // Glow drift
+  const g1=document.getElementById('g1');
+  const g2=document.getElementById('g2');
+  const g3=document.getElementById('g3');
+  const g4=document.getElementById('g4');
+  if(g1){g1.setAttribute('cx',200+Math.sin(t*.4)*100);g1.setAttribute('cy',300+Math.cos(t*.3)*70);}
+  if(g2){g2.setAttribute('cx',1100+Math.cos(t*.35)*120);g2.setAttribute('cy',200+Math.sin(t*.5)*80);}
+  if(g3){g3.setAttribute('cx',700+Math.sin(t*.6+1)*90);g3.setAttribute('cy',650+Math.cos(t*.4)*60);}
+  if(g4){g4.setAttribute('cx',900+Math.cos(t*.5+2)*80);g4.setAttribute('cy',500+Math.sin(t*.7)*50);}
+
+  // Page 2 blobs
+  const p2m1=document.getElementById('p2m1');
+  const p2m2=document.getElementById('p2m2');
+  if(p2m1) p2m1.setAttribute('d',makeBlob(350,350,220,16,t*.8,75));
+  if(p2m2) p2m2.setAttribute('d',makeBlob(1050,300,190,14,t*.6+2,65));
+  const p2g1=document.getElementById('p2g1');
+  const p2g2=document.getElementById('p2g2');
+  if(p2g1){p2g1.setAttribute('cx',300+Math.sin(t*.5)*90);p2g1.setAttribute('cy',350+Math.cos(t*.4)*60);}
+  if(p2g2){p2g2.setAttribute('cx',1100+Math.cos(t*.4)*100);p2g2.setAttribute('cy',200+Math.sin(t*.6)*70);}
+
+  // Sparks
+  sparkData.forEach(p=>{
+    p.x+=p.vx+Math.sin(t+p.ph)*.4;
+    p.y+=p.vy+Math.cos(t*.7+p.ph)*.4;
+    if(p.x<0)p.x=1400; if(p.x>1400)p.x=0;
+    if(p.y<0)p.y=900;  if(p.y>900)p.y=0;
+    p.el.setAttribute('cx',p.x);
+    p.el.setAttribute('cy',p.y);
+  });
+
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
