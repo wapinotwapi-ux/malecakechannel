@@ -94,12 +94,17 @@ nav {
 
 .raya-text {
   font-family:'Bungee',cursive;
-  font-size:clamp(.7rem,2vw,1rem);
-  letter-spacing:.25em;
+  font-size:clamp(.6rem,1.5vw,.85rem);
+  letter-spacing:.15em;
   color:var(--c2);
   margin-bottom:8px;
-  text-shadow:0 0 20px rgba(255,222,3,.5);
-  animation: pulse 2s ease-in-out infinite;
+  text-shadow:0 0 20px rgba(255,222,3,.5), 0 0 40px rgba(255,222,3,.3);
+  animation: rayaPulse 1.5s ease-in-out infinite;
+  text-transform:uppercase;
+}
+@keyframes rayaPulse {
+  0%,100%{ text-shadow:0 0 20px rgba(255,222,3,.5),0 0 40px rgba(255,222,3,.3); }
+  50%{ text-shadow:0 0 30px rgba(255,222,3,.9),0 0 60px rgba(255,60,172,.5),0 0 80px rgba(0,245,212,.3); }
 }
 
 /* Morph title */
@@ -379,30 +384,6 @@ nav {
 }
 .video-fallback:hover { color:var(--c3); border-color:var(--c3); }
 
-/* Profile image under CHANNEL */
-.profile-wrap { display:flex; justify-content:center; margin-top:16px; }
-.profile-ring { position:relative; width:130px; height:130px; }
-.profile-ring-border {
-  position:absolute; inset:-4px; border-radius:50%;
-  background:conic-gradient(var(--c1),var(--c2),var(--c3),var(--c4),var(--c5),var(--c6),var(--c1));
-  animation:spinBorder 4s linear infinite;
-}
-@keyframes spinBorder { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-.profile-ring-inner {
-  position:absolute; inset:4px; border-radius:50%;
-  background:var(--bg); overflow:hidden;
-  display:flex; align-items:center; justify-content:center;
-}
-.profile-ph {
-  display:flex; flex-direction:column; align-items:center; gap:4px;
-  color:var(--muted);
-}
-.profile-ph span { font-size:.55rem; letter-spacing:.1em; text-transform:uppercase; }
-.profile-label {
-  position:absolute; inset:0; border-radius:50%;
-  cursor:pointer; z-index:2;
-}
-
 /* Responsive */
 @media(max-width:600px) {
   nav { padding:16px 24px; }
@@ -441,28 +422,15 @@ nav {
       <g id="sparks"></g>
     </svg>
 
+    <canvas id="fireworks-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5;"></canvas>
+
     <div class="hero-inner">
 
       <!-- Morph text -->
       <div class="morph-title-wrap">
-        <div class="raya-text">🪔 SELAMAT HARI RAYA 🪔</div>
+        <div class="raya-text">🎆 SELAMAT MENYAMBUT HARI RAYA AIDILFITRI EVERYONE 🎆</div>
         <div class="morph-title" id="morph-text">CAKE</div>
         <div class="morph-sub">CHANNEL</div>
-        <!-- Profile image under CHANNEL -->
-        <div class="profile-wrap">
-          <div class="profile-ring">
-            <div class="profile-ring-border"></div>
-            <div class="profile-ring-inner">
-              <img id="profile-img" alt="Profile" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
-              <div id="profile-ph" class="profile-ph">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity=".5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-                <span>Upload Photo</span>
-              </div>
-            </div>
-            <label for="profile-upload" class="profile-label"></label>
-            <input type="file" id="profile-upload" accept="image/*" style="display:none">
-          </div>
-        </div>
       </div>
 
       <p class="hero-desc">
@@ -576,18 +544,102 @@ nav {
 </div>
 
 <script>
-// ── Profile image upload ──────────────────────────────────
-document.getElementById('profile-upload').addEventListener('change',function(){
-  const file=this.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const img=document.getElementById('profile-img');
-    img.src=e.target.result;
-    img.style.display='block';
-    document.getElementById('profile-ph').style.display='none';
-  };
-  reader.readAsDataURL(file);
-});
+// ── Fireworks ─────────────────────────────────────────────
+const fwCanvas = document.getElementById('fireworks-canvas');
+const fwCtx = fwCanvas.getContext('2d');
+function resizeFW(){ fwCanvas.width=fwCanvas.offsetWidth; fwCanvas.height=fwCanvas.offsetHeight; }
+resizeFW(); window.addEventListener('resize', resizeFW);
+
+const fwColors = ['#ff3cac','#ffde03','#00f5d4','#ff6b35','#7b2ff7','#00cfff','#ffffff','#ff4444'];
+let particles = [];
+let rockets = [];
+
+function randomColor(){ return fwColors[Math.floor(Math.random()*fwColors.length)]; }
+
+function launchRocket(){
+  rockets.push({
+    x: Math.random()*fwCanvas.width,
+    y: fwCanvas.height,
+    tx: Math.random()*fwCanvas.width,
+    ty: Math.random()*(fwCanvas.height*0.5)+50,
+    speed: Math.random()*4+4,
+    color: randomColor(),
+    trail: []
+  });
+}
+
+function explode(x,y){
+  const count = Math.floor(Math.random()*60)+60;
+  const color = randomColor();
+  for(let i=0;i<count;i++){
+    const angle = (i/count)*Math.PI*2;
+    const speed = Math.random()*5+1;
+    particles.push({
+      x,y,
+      vx: Math.cos(angle)*speed,
+      vy: Math.sin(angle)*speed,
+      alpha:1,
+      color: Math.random()>0.3 ? color : randomColor(),
+      size: Math.random()*2.5+1,
+      decay: Math.random()*0.015+0.012,
+      gravity: 0.08
+    });
+  }
+}
+
+function drawFW(){
+  fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+
+  // Rockets
+  rockets = rockets.filter(r=>{
+    r.trail.push({x:r.x,y:r.y});
+    if(r.trail.length>12) r.trail.shift();
+    const dx=r.tx-r.x, dy=r.ty-r.y;
+    const dist=Math.hypot(dx,dy);
+    if(dist<r.speed){ explode(r.x,r.y); return false; }
+    r.x+=dx/dist*r.speed;
+    r.y+=dy/dist*r.speed;
+    // Draw trail
+    for(let i=0;i<r.trail.length;i++){
+      const a=(i/r.trail.length)*0.6;
+      fwCtx.beginPath();
+      fwCtx.arc(r.trail[i].x,r.trail[i].y,1.5,0,Math.PI*2);
+      fwCtx.fillStyle=r.color;
+      fwCtx.globalAlpha=a;
+      fwCtx.fill();
+    }
+    fwCtx.globalAlpha=1;
+    fwCtx.beginPath();
+    fwCtx.arc(r.x,r.y,2.5,0,Math.PI*2);
+    fwCtx.fillStyle=r.color;
+    fwCtx.fill();
+    return true;
+  });
+
+  // Particles
+  particles = particles.filter(p=>{
+    p.x+=p.vx; p.y+=p.vy;
+    p.vy+=p.gravity;
+    p.vx*=0.98; p.vy*=0.98;
+    p.alpha-=p.decay;
+    if(p.alpha<=0) return false;
+    fwCtx.beginPath();
+    fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2);
+    fwCtx.fillStyle=p.color;
+    fwCtx.globalAlpha=p.alpha;
+    fwCtx.fill();
+    fwCtx.globalAlpha=1;
+    return true;
+  });
+
+  requestAnimationFrame(drawFW);
+}
+drawFW();
+
+// Auto launch rockets
+setInterval(launchRocket, 800);
+// Burst on load
+setTimeout(()=>{ for(let i=0;i<5;i++) setTimeout(launchRocket, i*300); }, 500);
 
 // ── Page switching ────────────────────────────────────────
 function showPage(n) {
