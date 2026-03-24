@@ -1,322 +1,763 @@
-# CAKE CHANNEL — Neatened Version (Same Content, Cleaner Structure)
-
-Below is your **same website**, but reorganized and cleaned so it looks more **tersusun (structured & neat)** without changing features, wording, or design identity.
-
----
-
-## ✅ What was improved (no content changes)
-
-* Consistent spacing system
-* Fixed broken CSS block causing layout inconsistency
-* Grouped styles by section
-* Better visual hierarchy
-* Cleaner responsive behavior
-* Aligned containers for balanced layout
-
----
-
-## Updated HTML (Drop‑in Replacement)
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CAKE CHANNEL</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Bungee+Shade&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-
 <style>
-/* ======================================================
-   GLOBAL
-====================================================== */
-:root{
-  --c1:#ff3cac;
-  --c2:#ffde03;
-  --c3:#00f5d4;
-  --c4:#ff6b35;
-  --c5:#7b2ff7;
-  --bg:#0a0a0f;
-  --surface:#13131f;
-  --text:#ffffff;
-  --muted:#666680;
+@import url('https://fonts.googleapis.com/css2?family=Bungee&family=DM+Sans:wght@300;400;600&family=Bungee+Shade&display=swap');
+
+:root {
+  --c1: #ff3cac;
+  --c2: #ffde03;
+  --c3: #00f5d4;
+  --c4: #ff6b35;
+  --c5: #7b2ff7;
+  --c6: #00cfff;
+  --bg: #0a0a0f;
+  --surface: #13131f;
+  --text: #ffffff;
+  --muted: #666680;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  font-family:'DM Sans',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: default;
 }
 
-.container{
-  width:min(1100px,92%);
-  margin-inline:auto;
-}
+/* PAGES */
+.page { display:none; min-height:100vh; }
+.page.active { display:block; }
 
-.page{display:none;min-height:100vh}
-.page.active{display:block}
-
-/* ======================================================
-   NAV
-====================================================== */
-nav{
-  position:fixed;
-  inset:0 0 auto 0;
+/* ─── NAV ─────────────────────────────────── */
+nav {
+  position:fixed; top:0; left:0; right:0;
   z-index:500;
-  backdrop-filter:blur(20px);
-  background:rgba(10,10,15,.7);
-  border-bottom:1px solid rgba(255,255,255,.05);
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 48px;
+  background: rgba(10,10,15,0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.nav-logo {
+  font-family: 'Bungee', cursive;
+  font-size: 1.4rem;
+  letter-spacing: .1em;
+  background: linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.nav-btns { display:flex; gap:12px; align-items:center; }
+.nav-btn {
+  font-family:'DM Sans',sans-serif;
+  font-size:.7rem; font-weight:600;
+  letter-spacing:.15em; text-transform:uppercase;
+  padding:10px 24px; border:none; cursor:pointer;
+  transition:all .3s;
+}
+.nav-btn.outline {
+  background:transparent;
+  border:1.5px solid var(--muted);
+  color:var(--muted);
+}
+.nav-btn.outline:hover, .nav-btn.outline.active {
+  border-color:var(--c3); color:var(--c3);
+}
+.nav-btn.filled {
+  background: linear-gradient(135deg,var(--c1),var(--c5));
+  color:#fff;
+}
+.nav-btn.filled:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,60,172,.4); }
+
+/* ─── PAGE 1: HOME ────────────────────────── */
+#hero {
+  position:relative; min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; overflow:hidden; padding-top:80px;
 }
 
-.nav-inner{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:18px 0;
+#bg-canvas {
+  position:absolute; inset:0; width:100%; height:100%;
 }
 
-.nav-logo{
+.hero-inner {
+  position:relative; z-index:10;
+  display:flex; flex-direction:column; align-items:center;
+  gap:32px; text-align:center; padding:40px;
+}
+
+
+
+.raya-text {
   font-family:'Bungee',cursive;
-  letter-spacing:.12em;
-  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-
-/* ======================================================
-   HERO
-====================================================== */
-#hero{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding-top:90px;
-  text-align:center;
-  position:relative;
-}
-
-.hero-inner{
-  width:min(520px,92%);
-  display:flex;
-  flex-direction:column;
-  gap:28px;
-  align-items:center;
-}
-
-.raya-text{
-  font-family:'Bungee',cursive;
-  font-size:.75rem;
+  font-size:clamp(.6rem,1.5vw,.85rem);
   letter-spacing:.15em;
   color:var(--c2);
-}
-
-.morph-title{
-  font-family:'Bungee Shade',cursive;
-  font-size:clamp(3rem,9vw,6rem);
-  line-height:1;
-}
-
-.morph-sub{
-  font-family:'Bungee',cursive;
-  letter-spacing:.3em;
-  opacity:.6;
-}
-
-.hero-desc{
-  font-size:.8rem;
-  letter-spacing:.12em;
+  margin-bottom:8px;
+  text-shadow:0 0 20px rgba(255,222,3,.5), 0 0 40px rgba(255,222,3,.3);
+  animation: rayaPulse 1.5s ease-in-out infinite;
   text-transform:uppercase;
-  opacity:.6;
+}
+@keyframes rayaPulse {
+  0%,100%{ text-shadow:0 0 20px rgba(255,222,3,.5),0 0 40px rgba(255,222,3,.3); }
+  50%{ text-shadow:0 0 30px rgba(255,222,3,.9),0 0 60px rgba(255,60,172,.5),0 0 80px rgba(0,245,212,.3); }
 }
 
-/* ======================================================
-   INFO BOX
-====================================================== */
-.info-list{
-  width:100%;
-  text-align:left;
-  padding:22px 24px;
+/* Morph title */
+.morph-title-wrap {
+  opacity:0; animation: fadeUp .8s .5s forwards;
+}
+.morph-title {
+  font-family:'Bungee Shade', cursive;
+  font-size: clamp(2.8rem, 10vw, 7rem);
+  line-height:1;
+  background: linear-gradient(90deg, var(--c1) 0%, var(--c2) 25%, var(--c3) 50%, var(--c4) 75%, var(--c5) 100%);
+  background-size:300%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation: gradFlow 3s linear infinite, fadeUp .8s .5s forwards;
+  filter: drop-shadow(0 0 30px rgba(255,60,172,.4));
+}
+.morph-sub {
+  font-family:'Bungee',cursive;
+  font-size: clamp(1rem, 3vw, 1.8rem);
+  letter-spacing:.3em;
+  color:rgba(255,255,255,.5);
+  margin-top:8px;
+}
+
+.info-list {
+  display:flex; flex-direction:column; gap:12px;
   background:rgba(255,255,255,.04);
   border:1px solid rgba(255,255,255,.08);
   border-left:3px solid var(--c2);
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  padding:24px 28px;
+  max-width:420px; width:100%;
+  text-align:left;
+  opacity:0; animation:fadeUp .8s .8s forwards;
 }
-
-.info-item{
+.info-item {
+  font-family:'DM Sans',sans-serif;
   font-size:.8rem;
-  letter-spacing:.06em;
-  line-height:1.7;
+  color:rgba(255,255,255,.85);
+  line-height:1.8;
+  letter-spacing:.08em;
+  text-transform:uppercase;
 }
-
-.price-now{
+.hero-desc {
+  max-width:480px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.8rem; line-height:1.8;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+  opacity:0; animation:fadeUp .8s .7s forwards;
+}.price-now {
   font-family:'Bungee',cursive;
-  font-size:1.3rem;
+  font-size:1.4rem;
+  background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c1));
+  background-size: 300%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation: priceFlow 2s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255,222,3,.6));
+}
+@keyframes priceFlow {
+  0%{ background-position:0% 50%; }
+  100%{ background-position:300% 50%; }
+}
+.price-orig {
+  font-size:.85rem; color:var(--muted);
+  text-decoration:line-through; margin-left:4px;
+}
+.price-tag {
+  font-size:.6rem; letter-spacing:.12em;
+  background:var(--c1); color:#000;
+  padding:3px 10px; border-radius:100px;
+  font-weight:700; margin-left:8px;
+  vertical-align:middle;
 }
 
-.price-orig{
-  text-decoration:line-through;
-  color:var(--muted);
-}
-
-.price-tag{
-  background:var(--c1);
-  color:#000;
-  padding:3px 10px;
-  border-radius:999px;
-  font-size:.6rem;
-  margin-left:6px;
-}
-
-/* ======================================================
-   BUTTONS
-====================================================== */
-.big-btn{
+/* Preview link */
+.preview-link {
+  display:inline-block;
   font-family:'Bungee',cursive;
-  letter-spacing:.15em;
-  padding:15px 30px;
+  font-size:.75rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
   text-decoration:none;
-  transition:.3s;
+  padding:14px 28px;
+  border:2px solid var(--c3);
+  color:var(--c3);
+  position:relative;
+  overflow:hidden;
+  transition:all .3s;
+  opacity:0; animation:fadeUp .8s 1s forwards;
 }
+.preview-link::before {
+  content:'';
+  position:absolute; inset:0;
+  background:var(--c3);
+  transform:translateX(-100%);
+  transition:transform .3s ease;
+  z-index:-1;
+}
+.preview-link:hover::before { transform:translateX(0); }
+.preview-link:hover { color:#000; }
 
-.big-btn-rainbow{
-  background:linear-gradient(135deg,var(--c1),var(--c4),var(--c2));
+/* Responsive — full device support */
+@media(max-width:1024px){
+  nav { padding:16px 32px; }
+  .hero-inner { padding:28px 24px; gap:24px; }
+  .cards-section { padding:60px 32px; }
+  .cta-section { padding:80px 40px; }
+}
+@media(max-width:768px){
+  nav { padding:14px 20px; }
+  .nav-logo { font-size:1.1rem; }
+  .hero-inner { padding:20px 16px; gap:20px; width:100%; }
+  .morph-title { font-size:clamp(2.5rem,14vw,5rem); }
+  .morph-sub { font-size:clamp(.9rem,4vw,1.4rem); letter-spacing:.2em; }
+  .raya-text { font-size:clamp(.55rem,2.5vw,.75rem); letter-spacing:.1em; }
+  .info-list { padding:18px 20px; max-width:100%; }
+  .info-item { font-size:.75rem; }
+  .hero-btns { gap:12px; }
+  .big-btn { padding:14px 24px; font-size:.7rem; }
+  .badges { gap:8px; }
+  .badge { font-size:.55rem; padding:5px 12px; }
+  .preview-link { font-size:.65rem; padding:12px 20px; }
+  .cards-section { padding:40px 16px; grid-template-columns:1fr; }
+  .cta-section { padding:60px 20px; }
+  .video-wrap { max-width:100%; }
+  .ticker-item { font-size:.6rem; padding:0 20px; }
+}
+@media(max-width:480px){
+  .morph-title { font-size:clamp(2.2rem,16vw,4rem); }
+  .hero-inner { padding:16px 12px; gap:16px; }
+  .info-list { padding:16px; }
+  .info-item { font-size:.7rem; letter-spacing:.04em; }
+  .big-btn { padding:12px 20px; font-size:.65rem; width:100%; text-align:center; }
+  .hero-btns { flex-direction:column; width:100%; max-width:280px; }
+  .price-now { font-size:1.2rem; }
+  .cards-section { padding:30px 12px; gap:16px; }
+  .card { padding:24px 18px; }
+  .p2-content { padding:40px 20px; }
+}
+  display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+  opacity:0; animation:fadeUp .8s .9s forwards;
+}
+.big-btn {
+  font-family:'Bungee',cursive;
+  font-size:.75rem; letter-spacing:.15em;
+  padding:16px 36px; border:none; cursor:pointer;
+  transition:all .3s; text-decoration:none;
+  display:inline-block;
+}
+.big-btn-rainbow {
+  background: linear-gradient(135deg,var(--c1),var(--c4),var(--c2));
   color:#000;
+  box-shadow:0 0 30px rgba(255,222,3,.3);
 }
-
-.big-btn-outline{
+.big-btn-rainbow:hover { transform:translateY(-3px) scale(1.03); box-shadow:0 16px 50px rgba(255,60,172,.5); }
+.big-btn-outline {
+  background:transparent;
   border:2px solid var(--c3);
   color:var(--c3);
 }
+.big-btn-outline:hover { background:var(--c3); color:#000; transform:translateY(-3px); }
 
-.hero-btns{
-  display:flex;
-  gap:14px;
-  flex-wrap:wrap;
-  justify-content:center;
+
+
+/* Floating badges */
+.badges {
+  display:flex; gap:12px; flex-wrap:wrap; justify-content:center;
+  opacity:0; animation:fadeUp .8s 1.2s forwards;
 }
-
-/* ======================================================
-   BADGES
-====================================================== */
-.badges{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:center;
+.badge {
+  font-size:.6rem; letter-spacing:.12em; text-transform:uppercase;
+  padding:6px 16px; border-radius:100px;
+  font-weight:600;
 }
+.badge:nth-child(1) { background:rgba(255,60,172,.15); border:1px solid var(--c1); color:var(--c1); }
+.badge:nth-child(2) { background:rgba(0,245,212,.15); border:1px solid var(--c3); color:var(--c3); }
+.badge:nth-child(3) { background:rgba(255,222,3,.15); border:1px solid var(--c2); color:var(--c2); }
+.badge:nth-child(4) { background:rgba(123,47,247,.15); border:1px solid var(--c5); color:var(--c5); }
 
-.badge{
-  font-size:.6rem;
-  padding:6px 14px;
-  border-radius:999px;
-  border:1px solid currentColor;
+/* ─── PAGE 2: ABOUT ───────────────────────── */
+#page2 { padding-top:80px; background:var(--bg); }
+
+.p2-hero {
+  min-height:60vh;
+  display:flex; align-items:center; justify-content:center;
+  position:relative; overflow:hidden;
 }
+#p2-canvas { position:absolute; inset:0; width:100%; height:100%; }
 
-/* ======================================================
-   ABOUT PAGE
-====================================================== */
-#page2{padding-top:90px}
-
-.cards-section{
-  width:min(1100px,92%);
-  margin:70px auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:22px;
+.p2-content {
+  position:relative; z-index:10;
+  text-align:center; padding:60px 40px;
 }
-
-.card{
-  background:var(--surface);
-  padding:32px 24px;
-  border:1px solid rgba(255,255,255,.06);
-  transition:.3s;
+.p2-tag {
+  font-size:.6rem; letter-spacing:.4em; text-transform:uppercase;
+  color:var(--c3); margin-bottom:16px;
 }
-
-.card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(255,255,255,.2);
-}
-
-.card-title{
+.p2-title {
   font-family:'Bungee',cursive;
-  margin-bottom:10px;
+  font-size:clamp(2rem,6vw,5rem);
+  line-height:1.05;
+  margin-bottom:24px;
+}
+.p2-title span {
+  background:linear-gradient(90deg,var(--c2),var(--c4));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
 }
 
-.card-text{
-  font-size:.85rem;
-  color:var(--muted);
-  line-height:1.7;
+/* Cards grid */
+.cards-section {
+  padding:80px 60px;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap:24px;
+  max-width:1100px; margin:0 auto;
 }
+.card {
+  background:var(--surface);
+  border:1px solid rgba(255,255,255,.06);
+  padding:36px 28px;
+  transition:all .4s;
+  position:relative; overflow:hidden;
+}
+.card::before {
+  content:''; position:absolute; inset:0;
+  opacity:0; transition:opacity .4s;
+}
+.card:nth-child(1)::before { background:radial-gradient(circle at 50% 0%,rgba(255,60,172,.1),transparent 70%); }
+.card:nth-child(2)::before { background:radial-gradient(circle at 50% 0%,rgba(0,245,212,.1),transparent 70%); }
+.card:nth-child(3)::before { background:radial-gradient(circle at 50% 0%,rgba(255,222,3,.1),transparent 70%); }
+.card:hover::before { opacity:1; }
+.card:hover { transform:translateY(-6px); border-color:rgba(255,255,255,.15); }
 
-/* ======================================================
-   CTA
-====================================================== */
-.cta-section{
+.card-icon { font-size:2rem; margin-bottom:16px; }
+.card-title {
+  font-family:'Bungee',cursive;
+  font-size:1rem; letter-spacing:.08em;
+  margin-bottom:12px;
+}
+.card-text { font-size:.85rem; color:var(--muted); line-height:1.7; }
+
+/* CTA section */
+.cta-section {
+  padding:100px 60px;
   text-align:center;
-  padding:90px 20px;
+  background:linear-gradient(135deg,rgba(255,60,172,.05),rgba(123,47,247,.05));
   border-top:1px solid rgba(255,255,255,.05);
 }
-
-.cta-title{
+.cta-title {
   font-family:'Bungee Shade',cursive;
-  font-size:clamp(2rem,6vw,4rem);
-  margin-bottom:20px;
+  font-size:clamp(2rem,6vw,5rem);
+  background:linear-gradient(90deg,var(--c1),var(--c3),var(--c2));
+  background-size:200%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation:gradFlow 3s linear infinite;
+  margin-bottom:24px;
+}
+.cta-text { font-size:.95rem; color:var(--muted); max-width:500px; margin:0 auto 40px; line-height:1.8; }
+.cta-btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+
+/* ─── TICKER ──────────────────────────────── */
+.ticker {
+  width:100%; overflow:hidden;
+  padding:12px 0;
+  background:linear-gradient(90deg,var(--c1),var(--c5),var(--c3),var(--c4),var(--c2));
+  background-size:300%;
+  animation:gradFlow 4s linear infinite;
+}
+.ticker-inner { display:flex; animation:tickScroll 18s linear infinite; white-space:nowrap; }
+.ticker-item {
+  font-family:'Bungee',cursive;
+  font-size:.7rem; letter-spacing:.2em;
+  color:#000; padding:0 32px;
+  display:flex; align-items:center; gap:16px;
+}
+.ticker-dot { width:5px; height:5px; background:#000; border-radius:50%; opacity:.5; }
+
+/* ─── ANIMATIONS ──────────────────────────── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(28px); }
+  to { opacity:1; transform:translateY(0); }
+}
+@keyframes gradFlow {
+  0% { background-position:0% 50%; }
+  100% { background-position:300% 50%; }
+}
+@keyframes tickScroll {
+  from { transform:translateX(0); }
+  to { transform:translateX(-50%); }
+}
+@keyframes pulse {
+  0%,100% { opacity:.3; }
+  50% { opacity:1; }
 }
 
-.cta-text{
-  max-width:520px;
-  margin-inline:auto;
-  margin-bottom:30px;
-  color:var(--muted);
+.feedback-card {
+  cursor:pointer;
+  border-color:rgba(0,245,212,.2) !important;
+}
+.feedback-card:hover {
+  border-color:var(--c3) !important;
+  transform:translateY(-6px);
+}
+.feedback-btn {
+  margin-top:16px;
+  display:inline-block;
+  font-size:.7rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--c3);
+  border-bottom:1px solid var(--c3);
+  padding-bottom:2px;
+  font-weight:600;
 }
 
-/* ======================================================
-   RESPONSIVE
-====================================================== */
-@media(max-width:600px){
-  .hero-btns{flex-direction:column}
-  .big-btn{width:100%;text-align:center}
+.feedback-link {
+  color:var(--c3);
+  text-decoration:none;
+  border-bottom:2px solid var(--c3);
+  transition:all .3s;
 }
+.feedback-link:hover { color:var(--c2); border-color:var(--c2); }
+
+/* Video preview */
+.video-wrap {
+  width:100%; max-width:420px;
+  display:flex; flex-direction:column; gap:10px;
+  opacity:0; animation:fadeUp .8s 1s forwards;
+}
+.video-label {
+  font-size:.65rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--c3); font-weight:600;
+}
+.video-frame {
+  width:100%; aspect-ratio:16/9;
+  border:1px solid rgba(255,255,255,.1);
+  background:#000;
+}
+
+.video-fallback {
+  font-size:.7rem; letter-spacing:.1em;
+  color:var(--muted); text-decoration:none;
+  text-align:center; padding:8px;
+  border:1px dashed var(--muted);
+  transition:all .3s;
+}
+.video-fallback:hover { color:var(--c3); border-color:var(--c3); }
+
+
 </style>
 </head>
-
 <body>
 
+<!-- NAV -->
 <nav>
-  <div class="nav-inner container">
-    <div class="nav-logo">CAKE CHANNEL</div>
-  </div>
+  <div class="nav-logo">CAKE CHANNEL</div>
 </nav>
 
-<!-- KEEP ALL YOUR ORIGINAL BODY CONTENT BELOW THIS LINE -->
-<!-- (Paste your existing hero, pages, scripts exactly as before) -->
+<!-- ══ PAGE 1 ══════════════════════════════ -->
+<div class="page active" id="page1">
+  <section id="hero">
+    <canvas id="morph-bg" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
 
+    <div class="hero-inner">
+
+      <!-- Morph text -->
+      <div class="morph-title-wrap">
+        <div class="raya-text">🎆 SELAMAT MENYAMBUT HARI RAYA AIDILFITRI EVERYONE 🎆</div>
+        <div class="morph-title" id="morph-text">CAKE</div>
+        <div class="morph-sub">CHANNEL</div>
+      </div>
+
+      <p class="hero-desc">
+        [PERMANENT CHANNEL] — SUBSCRIBE ONCE, YOURS FOREVER.
+      </p>
+
+      <div class="info-list">
+        <div class="info-item">PRICE: <span class="price-now">RM30</span> <span class="price-orig">RM90</span> <span class="price-tag">LIMITED PRICE</span></div>
+        <div class="info-item">- ONE TIME PAYMENT <strong>(LIFETIME, NO REMOVE)</strong></div>
+        <div class="info-item">- NEW VIDEO WILL BE UPLOAD <strong>ONCE A WEEK</strong> (WITHOUT A MISS)</div>
+        <div class="info-item">- ALL VIDEOS IS <strong>(FULL-LENGTH VIDEOS)</strong></div>
+        <div class="info-item">- LEGIT <strong>(NOT A SCAM)</strong></div>
+      </div>
+
+      <a href="https://t.me/cakechannelpreview" target="_blank" class="preview-link">
+        👁 PREVIEW CHANNEL HERE
+      </a>
+
+      <!-- Video preview -->
+      <div class="video-wrap">
+        <iframe
+          src="https://drive.google.com/file/d/1rGIQE3rSKrg9Ny5nsL8tRTVweA0XE3tR/preview"
+          class="video-frame"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+          frameborder="0"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+        <a href="https://drive.google.com/file/d/1rGIQE3rSKrg9Ny5nsL8tRTVweA0XE3tR/view?usp=sharing" target="_blank" class="video-fallback">▶ Can't see video? Click here to watch</a>
+      </div>
+
+      <div class="hero-btns">
+        <a href="https://t.me/fisahrima?text=nak%20join%20channel" target="_blank" class="big-btn big-btn-rainbow">🎂 Subscribe Now</a>
+        <button class="big-btn big-btn-outline" onclick="showPage(2)">Learn More</button>
+      </div>
+
+      <div class="badges">
+        <span class="badge">WEEKLY UPDATE</span>
+        <span class="badge">LIFETIME ACCESS</span>
+        <span class="badge">EXCLUSIVE CONTENT</span>
+        <span class="badge">PREMIUM QUALITY</span>
+      </div>
+
+
+    </div>
+
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-inner" id="ticker1"></div>
+  </div>
+</div>
+
+<!-- ══ PAGE 2 ══════════════════════════════ -->
+<div class="page" id="page2">
+  <section class="p2-hero">
+    <svg id="p2-canvas" viewBox="0 0 1400 700" preserveAspectRatio="xMidYMid slice">
+      <defs><filter id="pb"><feGaussianBlur stdDeviation="45"/></filter></defs>
+      <ellipse id="p2g1" cx="300" cy="350" rx="400" ry="300" fill="rgba(255,107,53,0.2)" filter="url(#pb)"/>
+      <ellipse id="p2g2" cx="1100" cy="200" rx="350" ry="280" fill="rgba(0,207,255,0.18)" filter="url(#pb)"/>
+      <path id="p2m1" fill="none" stroke="#ff6b35" stroke-width="1.5" stroke-opacity="0.5"/>
+      <path id="p2m2" fill="none" stroke="#00cfff" stroke-width="1" stroke-opacity="0.4"/>
+    </svg>
+    <div class="p2-content">
+      <p class="p2-tag">About Us</p>
+      <h2 class="p2-title">Why Choose<br><span>CAKE CHANNEL?</span></h2>
+    </div>
+  </section>
+
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-inner" id="ticker2"></div>
+  </div>
+
+  <!-- Cards -->
+  <div class="cards-section">
+    <div class="card">
+      <div class="card-icon">💰</div>
+      <div class="card-title">RM30 Only</div>
+      <p class="card-text">Original price RM90 — now only RM30. One time payment, lifetime access. No recurring fees, no hidden charges.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📹</div>
+      <div class="card-title">Weekly Full Videos</div>
+      <p class="card-text">New full-length videos uploaded once a week at night without a miss. Not clips — full content every time.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">✅</div>
+      <div class="card-title">100% Legit</div>
+      <p class="card-text">Permanent channel. Your access will never be removed. We are NOT a scam — trusted and verified.</p>
+    </div>
+    <div class="card feedback-card" onclick="window.open('https://cyclic-chord-3dd.notion.site/Feedback-329c30529cee80069ab5f7a93531f9c4','_blank')">
+      <div class="card-icon">💬</div>
+      <div class="card-title" style="color:var(--c3);">Feedback</div>
+      <p class="card-text">Tekan sini nak tengok feedback, kalau tak percaya kita bukan scam! 👀</p>
+      <div class="feedback-btn">Tekan Sini →</div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-title">JOIN TODAY</div>
+    <p class="cta-text">RM30 one time payment. Lifetime access. Full-length videos daily. Permanent channel — no remove. Legit, not a scam. 🎂</p>
+    <div class="cta-btns">
+      <a href="https://t.me/fisahrima?text=nak%20join%20channel" target="_blank" class="big-btn big-btn-rainbow">🎂 Subscribe Now</a>
+      <button class="big-btn big-btn-outline" onclick="showPage(1)">← Back to Home</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Page switching ────────────────────────────────────────
+function showPage(n) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page'+n).classList.add('active');
+  document.querySelectorAll('.nav-btn.outline').forEach((b,i)=>b.classList.toggle('active',i===n-1));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+
+
+// ── Ticker ────────────────────────────────────────────────
+const words=['CAKE CHANNEL','Subscribe Now','Weekly Updates','Lifetime Access','Premium Quality','Exclusive Content'];
+['ticker1','ticker2'].forEach(id=>{
+  const track=document.getElementById(id);
+  [...words,...words,...words,...words].forEach(w=>{
+    const s=document.createElement('span');
+    s.className='ticker-item';
+    s.innerHTML=`${w}<span class="ticker-dot"></span>`;
+    track.appendChild(s);
+  });
+});
+
+// ── Morph text animation ──────────────────────────────────
+const morphWords=['CAKE','SWEET','FRESH','WILD','EPIC','PURE'];
+let mwi=0, morphT=0;
+setInterval(()=>{
+  mwi=(mwi+1)%morphWords.length;
+  const el=document.getElementById('morph-text');
+  el.style.transform='scaleY(0)';
+  el.style.opacity='0';
+  setTimeout(()=>{
+    el.textContent=morphWords[mwi];
+    el.style.transform='scaleY(1)';
+    el.style.opacity='1';
+  },300);
+},2500);
+document.getElementById('morph-text').style.transition='transform .3s ease,opacity .3s ease';
+
+// ── Canvas Morph Background ───────────────────────────────
+const morphBg = document.getElementById('morph-bg');
+const mCtx = morphBg.getContext('2d');
+function resizeMorph(){
+  morphBg.width = morphBg.offsetWidth;
+  morphBg.height = morphBg.offsetHeight;
+}
+resizeMorph();
+window.addEventListener('resize', resizeMorph);
+
+function morphBlob(cx, cy, r, pts, t, amp){
+  const points = [];
+  for(let i=0;i<pts;i++){
+    const a=(i/pts)*Math.PI*2;
+    const n = Math.sin(a*2+t*0.7)*amp + Math.sin(a*3-t*0.4)*amp*0.5 + Math.sin(a*5+t*1.1)*amp*0.25;
+    const rad = r+n;
+    points.push([cx+Math.cos(a)*rad, cy+Math.sin(a)*rad]);
+  }
+  return points;
+}
+
+function drawMorphBlob(pts, color, alpha){
+  const n=pts.length;
+  mCtx.beginPath();
+  mCtx.moveTo(pts[0][0],pts[0][1]);
+  for(let i=0;i<n;i++){
+    const p0=pts[(i-1+n)%n],p1=pts[i],p2=pts[(i+1)%n],p3=pts[(i+2)%n];
+    const cp1x=p1[0]+(p2[0]-p0[0])/6, cp1y=p1[1]+(p2[1]-p0[1])/6;
+    const cp2x=p2[0]-(p3[0]-p1[0])/6, cp2y=p2[1]-(p3[1]-p1[1])/6;
+    mCtx.bezierCurveTo(cp1x,cp1y,cp2x,cp2y,p2[0],p2[1]);
+  }
+  mCtx.closePath();
+  mCtx.fillStyle=color;
+  mCtx.globalAlpha=alpha;
+  mCtx.fill();
+  mCtx.globalAlpha=1;
+}
+
+const blobs = [
+  {xOff:0.15, yOff:0.4,  rBase:0.28, pts:14, speed:0.5,  amp:0.06, color:'#ff3cac', phase:0},
+  {xOff:0.8,  yOff:0.25, rBase:0.25, pts:12, speed:0.35, amp:0.07, color:'#00f5d4', phase:1.5},
+  {xOff:0.5,  yOff:0.75, rBase:0.22, pts:10, speed:0.6,  amp:0.05, color:'#ffde03', phase:3},
+  {xOff:0.7,  yOff:0.6,  rBase:0.2,  pts:12, speed:0.45, amp:0.08, color:'#7b2ff7', phase:0.8},
+  {xOff:0.25, yOff:0.7,  rBase:0.18, pts:10, speed:0.55, amp:0.06, color:'#ff6b35', phase:2.2},
+  {xOff:0.6,  yOff:0.2,  rBase:0.2,  pts:12, speed:0.4,  amp:0.07, color:'#00cfff', phase:4},
+];
+
+let mt=0;
+function animateMorph(){
+  mt+=0.008;
+  const W=morphBg.width, H=morphBg.height;
+  mCtx.clearRect(0,0,W,H);
+
+  // Dark background
+  mCtx.fillStyle='#0a0a0f';
+  mCtx.globalAlpha=1;
+  mCtx.fillRect(0,0,W,H);
+
+  // Draw blobs
+  blobs.forEach((b,i)=>{
+    const cx = W * (b.xOff + Math.sin(mt*b.speed*0.7+b.phase)*0.12);
+    const cy = H * (b.yOff + Math.cos(mt*b.speed*0.5+b.phase)*0.1);
+    const r  = Math.min(W,H) * (b.rBase + Math.sin(mt*b.speed+b.phase)*0.03);
+    const amp = r * b.amp * 8;
+
+    // Glow layer (large soft)
+    const grad = mCtx.createRadialGradient(cx,cy,0,cx,cy,r*1.8);
+    grad.addColorStop(0, b.color+'55');
+    grad.addColorStop(1, b.color+'00');
+    mCtx.beginPath();
+    mCtx.arc(cx,cy,r*1.8,0,Math.PI*2);
+    mCtx.fillStyle=grad;
+    mCtx.globalAlpha=1;
+    mCtx.fill();
+
+    // Morph blob
+    const pts = morphBlob(cx,cy,r,b.pts,mt*b.speed+b.phase,amp);
+    drawMorphBlob(pts, b.color+'33', 1);
+
+    // Bright stroke
+    const n=pts.length;
+    mCtx.beginPath();
+    mCtx.moveTo(pts[0][0],pts[0][1]);
+    for(let j=0;j<n;j++){
+      const p0=pts[(j-1+n)%n],p1=pts[j],p2=pts[(j+1)%n],p3=pts[(j+2)%n];
+      const cp1x=p1[0]+(p2[0]-p0[0])/6,cp1y=p1[1]+(p2[1]-p0[1])/6;
+      const cp2x=p2[0]-(p3[0]-p1[0])/6,cp2y=p2[1]-(p3[1]-p1[1])/6;
+      mCtx.bezierCurveTo(cp1x,cp1y,cp2x,cp2y,p2[0],p2[1]);
+    }
+    mCtx.closePath();
+    mCtx.strokeStyle=b.color;
+    mCtx.lineWidth=1.2;
+    mCtx.globalAlpha=0.5;
+    mCtx.stroke();
+    mCtx.globalAlpha=1;
+  });
+
+  requestAnimationFrame(animateMorph);
+}
+animateMorph();
+
+// ── Page 2 SVG blobs ──────────────────────────────────────
+function makeBlob(cx,cy,r,n,t,amp){
+  const pts=[];
+  for(let i=0;i<n;i++){
+    const a=(i/n)*Math.PI*2;
+    const noise=Math.sin(a*2+t*.8)*amp+Math.sin(a*3-t*.5)*amp*.5+Math.sin(a*5+t*1.2)*amp*.25;
+    pts.push([cx+Math.cos(a)*(r+noise),cy+Math.sin(a)*(r+noise)]);
+  }
+  const s=pts.length;
+  let d=`M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
+  for(let i=0;i<s;i++){
+    const p0=pts[(i-1+s)%s],p1=pts[i],p2=pts[(i+1)%s],p3=pts[(i+2)%s];
+    const cp1x=p1[0]+(p2[0]-p0[0])/6,cp1y=p1[1]+(p2[1]-p0[1])/6;
+    const cp2x=p2[0]-(p3[0]-p1[0])/6,cp2y=p2[1]-(p3[1]-p1[1])/6;
+    d+=` C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+  }
+  return d+'Z';
+}
+
+let t=0;
+function loop(){
+  t+=0.009;
+  const p2m1=document.getElementById('p2m1');
+  const p2m2=document.getElementById('p2m2');
+  if(p2m1) p2m1.setAttribute('d',makeBlob(350,350,220,16,t*.8,75));
+  if(p2m2) p2m2.setAttribute('d',makeBlob(1050,300,190,14,t*.6+2,65));
+  const p2g1=document.getElementById('p2g1');
+  const p2g2=document.getElementById('p2g2');
+  if(p2g1){p2g1.setAttribute('cx',300+Math.sin(t*.5)*90);p2g1.setAttribute('cy',350+Math.cos(t*.4)*60);}
+  if(p2g2){p2g2.setAttribute('cx',1100+Math.cos(t*.4)*100);p2g2.setAttribute('cy',200+Math.sin(t*.6)*70);}
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
 </body>
 </html>
-```
-
----
-
-## How to use
-
-1. Replace your current `<head>` + CSS with this version.
-2. Keep **ALL your existing HTML sections and scripts** unchanged under the comment line.
-3. Save → refresh browser.
-
-You will see the layout become:
-
-* more aligned
-* spacing consistent
-* elements visually grouped
-* cleaner mobile layout
-
----
-
-If you want, next I can also make a **"Pro Clean" version** (still same design) that makes it look like a premium landing page — usually increases conversions a lot 🔥.
