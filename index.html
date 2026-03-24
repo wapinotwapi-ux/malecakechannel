@@ -140,10 +140,22 @@ nav {
   opacity:0; animation:fadeUp .8s .8s forwards;
 }
 .info-item {
-  font-size:.85rem; color:rgba(255,255,255,.85);
-  line-height:1.6;
+  font-family:'DM Sans',sans-serif;
+  font-size:.8rem;
+  color:rgba(255,255,255,.85);
+  line-height:1.8;
+  letter-spacing:.08em;
+  text-transform:uppercase;
 }
-.price-now {
+.hero-desc {
+  max-width:480px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.8rem; line-height:1.8;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.5);
+  opacity:0; animation:fadeUp .8s .7s forwards;
+}.price-now {
   font-family:'Bungee',cursive;
   font-size:1.3rem; color:var(--c2);
   text-shadow:0 0 20px rgba(255,222,3,.5);
@@ -160,12 +172,6 @@ nav {
   vertical-align:middle;
 }
 
-.hero-desc {
-  max-width:480px;
-  font-size:.9rem; line-height:1.8;
-  color:rgba(255,255,255,.6);
-  opacity:0; animation:fadeUp .8s .7s forwards;
-}
 
 .hero-btns {
   display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
@@ -396,33 +402,13 @@ nav {
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">🎂 CAKE CHANNEL</div>
-  <div class="nav-btns">
-    <button class="nav-btn outline active" onclick="showPage(1)">Home</button>
-    <button class="nav-btn outline" onclick="showPage(2)">About</button>
-    <a href="https://t.me/fisahrima?text=nak%20join%20channel" target="_blank" class="nav-btn filled">Subscribe</a>
-  </div>
+  <div class="nav-logo">CAKE CHANNEL</div>
 </nav>
 
 <!-- ══ PAGE 1 ══════════════════════════════ -->
 <div class="page active" id="page1">
   <section id="hero">
-    <svg id="bg-canvas" viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
-      <defs>
-        <filter id="gblur"><feGaussianBlur stdDeviation="50"/></filter>
-        <filter id="gblur2"><feGaussianBlur stdDeviation="30"/></filter>
-      </defs>
-      <ellipse id="g1" cx="200" cy="300" rx="350" ry="300" fill="rgba(255,60,172,0.25)" filter="url(#gblur)"/>
-      <ellipse id="g2" cx="1100" cy="200" rx="400" ry="320" fill="rgba(0,245,212,0.2)" filter="url(#gblur)"/>
-      <ellipse id="g3" cx="700" cy="650" rx="380" ry="280" fill="rgba(255,222,3,0.15)" filter="url(#gblur)"/>
-      <ellipse id="g4" cx="900" cy="500" rx="300" ry="250" fill="rgba(123,47,247,0.18)" filter="url(#gblur)"/>
-      <path id="hm1" fill="none" stroke="#ff3cac" stroke-width="1.5" stroke-opacity="0.5"/>
-      <path id="hm2" fill="none" stroke="#00f5d4" stroke-width="1" stroke-opacity="0.4"/>
-      <path id="hm3" fill="rgba(255,222,3,0.05)" stroke="#ffde03" stroke-width="1" stroke-opacity="0.3"/>
-      <g id="sparks"></g>
-    </svg>
-
-    <canvas id="fireworks-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5;"></canvas>
+    <canvas id="morph-bg" style="position:absolute;inset:0;width:100%;height:100%;"></canvas>
 
     <div class="hero-inner">
 
@@ -434,20 +420,19 @@ nav {
       </div>
 
       <p class="hero-desc">
-        🎂 <strong>[Permanent Channel]</strong> — Subscribe once, yours forever.
+        [PERMANENT CHANNEL] — SUBSCRIBE ONCE, YOURS FOREVER.
       </p>
 
       <div class="info-list">
-        <div class="info-item">💰 <span class="price-now">RM30</span> <span class="price-orig">RM90</span> <span class="price-tag">LIMITED PRICE</span></div>
-        <div class="info-item">♾️ One Time Payment — <strong>LIFETIME, NO REMOVE</strong></div>
-        <div class="info-item">📹 New video uploaded <strong>EVERYDAY</strong> without a miss</div>
-        <div class="info-item">🎬 All videos are <strong>FULL-LENGTH VIDEOS</strong></div>
-        <div class="info-item">✅ <strong>LEGIT</strong> — NOT A SCAM</div>
+        <div class="info-item">PRICE: <span class="price-now">RM30</span> <span class="price-orig">RM90</span> <span class="price-tag">LIMITED PRICE</span></div>
+        <div class="info-item">- ONE TIME PAYMENT <strong>(LIFETIME, NO REMOVE)</strong></div>
+        <div class="info-item">- NEW VIDEO WILL BE UPLOAD <strong>ONCE A WEEK</strong> (WITHOUT A MISS)</div>
+        <div class="info-item">- ALL VIDEOS IS <strong>(FULL-LENGTH VIDEOS)</strong></div>
+        <div class="info-item">- LEGIT <strong>(NOT A SCAM)</strong></div>
       </div>
 
       <!-- Video preview -->
       <div class="video-wrap">
-        <div class="video-label">🎬 Preview Video</div>
         <iframe
           src="https://drive.google.com/file/d/1rGIQE3rSKrg9Ny5nsL8tRTVweA0XE3tR/preview"
           class="video-frame"
@@ -465,10 +450,10 @@ nav {
       </div>
 
       <div class="badges">
-        <span class="badge">Daily Upload</span>
-        <span class="badge">Lifetime Access</span>
-        <span class="badge">Exclusive Content</span>
-        <span class="badge">Premium Quality</span>
+        <span class="badge">WEEKLY UPDATE</span>
+        <span class="badge">LIFETIME ACCESS</span>
+        <span class="badge">EXCLUSIVE CONTENT</span>
+        <span class="badge">PREMIUM QUALITY</span>
       </div>
 
 
@@ -516,8 +501,8 @@ nav {
     </div>
     <div class="card">
       <div class="card-icon">📹</div>
-      <div class="card-title">Daily Full Videos</div>
-      <p class="card-text">New full-length videos uploaded every single day without a miss. Not clips — full content every time.</p>
+      <div class="card-title">Weekly Full Videos</div>
+      <p class="card-text">New full-length videos uploaded once a week at night without a miss. Not clips — full content every time.</p>
     </div>
     <div class="card">
       <div class="card-icon">✅</div>
@@ -544,103 +529,6 @@ nav {
 </div>
 
 <script>
-// ── Fireworks ─────────────────────────────────────────────
-const fwCanvas = document.getElementById('fireworks-canvas');
-const fwCtx = fwCanvas.getContext('2d');
-function resizeFW(){ fwCanvas.width=fwCanvas.offsetWidth; fwCanvas.height=fwCanvas.offsetHeight; }
-resizeFW(); window.addEventListener('resize', resizeFW);
-
-const fwColors = ['#ff3cac','#ffde03','#00f5d4','#ff6b35','#7b2ff7','#00cfff','#ffffff','#ff4444'];
-let particles = [];
-let rockets = [];
-
-function randomColor(){ return fwColors[Math.floor(Math.random()*fwColors.length)]; }
-
-function launchRocket(){
-  rockets.push({
-    x: Math.random()*fwCanvas.width,
-    y: fwCanvas.height,
-    tx: Math.random()*fwCanvas.width,
-    ty: Math.random()*(fwCanvas.height*0.5)+50,
-    speed: Math.random()*4+4,
-    color: randomColor(),
-    trail: []
-  });
-}
-
-function explode(x,y){
-  const count = Math.floor(Math.random()*60)+60;
-  const color = randomColor();
-  for(let i=0;i<count;i++){
-    const angle = (i/count)*Math.PI*2;
-    const speed = Math.random()*5+1;
-    particles.push({
-      x,y,
-      vx: Math.cos(angle)*speed,
-      vy: Math.sin(angle)*speed,
-      alpha:1,
-      color: Math.random()>0.3 ? color : randomColor(),
-      size: Math.random()*2.5+1,
-      decay: Math.random()*0.015+0.012,
-      gravity: 0.08
-    });
-  }
-}
-
-function drawFW(){
-  fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
-
-  // Rockets
-  rockets = rockets.filter(r=>{
-    r.trail.push({x:r.x,y:r.y});
-    if(r.trail.length>12) r.trail.shift();
-    const dx=r.tx-r.x, dy=r.ty-r.y;
-    const dist=Math.hypot(dx,dy);
-    if(dist<r.speed){ explode(r.x,r.y); return false; }
-    r.x+=dx/dist*r.speed;
-    r.y+=dy/dist*r.speed;
-    // Draw trail
-    for(let i=0;i<r.trail.length;i++){
-      const a=(i/r.trail.length)*0.6;
-      fwCtx.beginPath();
-      fwCtx.arc(r.trail[i].x,r.trail[i].y,1.5,0,Math.PI*2);
-      fwCtx.fillStyle=r.color;
-      fwCtx.globalAlpha=a;
-      fwCtx.fill();
-    }
-    fwCtx.globalAlpha=1;
-    fwCtx.beginPath();
-    fwCtx.arc(r.x,r.y,2.5,0,Math.PI*2);
-    fwCtx.fillStyle=r.color;
-    fwCtx.fill();
-    return true;
-  });
-
-  // Particles
-  particles = particles.filter(p=>{
-    p.x+=p.vx; p.y+=p.vy;
-    p.vy+=p.gravity;
-    p.vx*=0.98; p.vy*=0.98;
-    p.alpha-=p.decay;
-    if(p.alpha<=0) return false;
-    fwCtx.beginPath();
-    fwCtx.arc(p.x,p.y,p.size,0,Math.PI*2);
-    fwCtx.fillStyle=p.color;
-    fwCtx.globalAlpha=p.alpha;
-    fwCtx.fill();
-    fwCtx.globalAlpha=1;
-    return true;
-  });
-
-  requestAnimationFrame(drawFW);
-}
-drawFW();
-
-// Auto launch rockets
-setInterval(launchRocket, 800);
-// Burst on load
-setTimeout(()=>{ for(let i=0;i<5;i++) setTimeout(launchRocket, i*300); }, 500);
-
 // ── Page switching ────────────────────────────────────────
 function showPage(n) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
@@ -652,7 +540,7 @@ function showPage(n) {
 
 
 // ── Ticker ────────────────────────────────────────────────
-const words=['CAKE CHANNEL','Subscribe Now','Daily Uploads','Lifetime Access','Premium Quality','Exclusive Content'];
+const words=['CAKE CHANNEL','Subscribe Now','Weekly Updates','Lifetime Access','Premium Quality','Exclusive Content'];
 ['ticker1','ticker2'].forEach(id=>{
   const track=document.getElementById(id);
   [...words,...words,...words,...words].forEach(w=>{
@@ -679,22 +567,119 @@ setInterval(()=>{
 },2500);
 document.getElementById('morph-text').style.transition='transform .3s ease,opacity .3s ease';
 
-// ── SVG helpers ───────────────────────────────────────────
+// ── Canvas Morph Background ───────────────────────────────
+const morphBg = document.getElementById('morph-bg');
+const mCtx = morphBg.getContext('2d');
+function resizeMorph(){
+  morphBg.width = morphBg.offsetWidth;
+  morphBg.height = morphBg.offsetHeight;
+}
+resizeMorph();
+window.addEventListener('resize', resizeMorph);
+
+function morphBlob(cx, cy, r, pts, t, amp){
+  const points = [];
+  for(let i=0;i<pts;i++){
+    const a=(i/pts)*Math.PI*2;
+    const n = Math.sin(a*2+t*0.7)*amp + Math.sin(a*3-t*0.4)*amp*0.5 + Math.sin(a*5+t*1.1)*amp*0.25;
+    const rad = r+n;
+    points.push([cx+Math.cos(a)*rad, cy+Math.sin(a)*rad]);
+  }
+  return points;
+}
+
+function drawMorphBlob(pts, color, alpha){
+  const n=pts.length;
+  mCtx.beginPath();
+  mCtx.moveTo(pts[0][0],pts[0][1]);
+  for(let i=0;i<n;i++){
+    const p0=pts[(i-1+n)%n],p1=pts[i],p2=pts[(i+1)%n],p3=pts[(i+2)%n];
+    const cp1x=p1[0]+(p2[0]-p0[0])/6, cp1y=p1[1]+(p2[1]-p0[1])/6;
+    const cp2x=p2[0]-(p3[0]-p1[0])/6, cp2y=p2[1]-(p3[1]-p1[1])/6;
+    mCtx.bezierCurveTo(cp1x,cp1y,cp2x,cp2y,p2[0],p2[1]);
+  }
+  mCtx.closePath();
+  mCtx.fillStyle=color;
+  mCtx.globalAlpha=alpha;
+  mCtx.fill();
+  mCtx.globalAlpha=1;
+}
+
+const blobs = [
+  {xOff:0.15, yOff:0.4,  rBase:0.28, pts:14, speed:0.5,  amp:0.06, color:'#ff3cac', phase:0},
+  {xOff:0.8,  yOff:0.25, rBase:0.25, pts:12, speed:0.35, amp:0.07, color:'#00f5d4', phase:1.5},
+  {xOff:0.5,  yOff:0.75, rBase:0.22, pts:10, speed:0.6,  amp:0.05, color:'#ffde03', phase:3},
+  {xOff:0.7,  yOff:0.6,  rBase:0.2,  pts:12, speed:0.45, amp:0.08, color:'#7b2ff7', phase:0.8},
+  {xOff:0.25, yOff:0.7,  rBase:0.18, pts:10, speed:0.55, amp:0.06, color:'#ff6b35', phase:2.2},
+  {xOff:0.6,  yOff:0.2,  rBase:0.2,  pts:12, speed:0.4,  amp:0.07, color:'#00cfff', phase:4},
+];
+
+let mt=0;
+function animateMorph(){
+  mt+=0.008;
+  const W=morphBg.width, H=morphBg.height;
+  mCtx.clearRect(0,0,W,H);
+
+  // Dark background
+  mCtx.fillStyle='#0a0a0f';
+  mCtx.globalAlpha=1;
+  mCtx.fillRect(0,0,W,H);
+
+  // Draw blobs
+  blobs.forEach((b,i)=>{
+    const cx = W * (b.xOff + Math.sin(mt*b.speed*0.7+b.phase)*0.12);
+    const cy = H * (b.yOff + Math.cos(mt*b.speed*0.5+b.phase)*0.1);
+    const r  = Math.min(W,H) * (b.rBase + Math.sin(mt*b.speed+b.phase)*0.03);
+    const amp = r * b.amp * 8;
+
+    // Glow layer (large soft)
+    const grad = mCtx.createRadialGradient(cx,cy,0,cx,cy,r*1.8);
+    grad.addColorStop(0, b.color+'55');
+    grad.addColorStop(1, b.color+'00');
+    mCtx.beginPath();
+    mCtx.arc(cx,cy,r*1.8,0,Math.PI*2);
+    mCtx.fillStyle=grad;
+    mCtx.globalAlpha=1;
+    mCtx.fill();
+
+    // Morph blob
+    const pts = morphBlob(cx,cy,r,b.pts,mt*b.speed+b.phase,amp);
+    drawMorphBlob(pts, b.color+'33', 1);
+
+    // Bright stroke
+    const n=pts.length;
+    mCtx.beginPath();
+    mCtx.moveTo(pts[0][0],pts[0][1]);
+    for(let j=0;j<n;j++){
+      const p0=pts[(j-1+n)%n],p1=pts[j],p2=pts[(j+1)%n],p3=pts[(j+2)%n];
+      const cp1x=p1[0]+(p2[0]-p0[0])/6,cp1y=p1[1]+(p2[1]-p0[1])/6;
+      const cp2x=p2[0]-(p3[0]-p1[0])/6,cp2y=p2[1]-(p3[1]-p1[1])/6;
+      mCtx.bezierCurveTo(cp1x,cp1y,cp2x,cp2y,p2[0],p2[1]);
+    }
+    mCtx.closePath();
+    mCtx.strokeStyle=b.color;
+    mCtx.lineWidth=1.2;
+    mCtx.globalAlpha=0.5;
+    mCtx.stroke();
+    mCtx.globalAlpha=1;
+  });
+
+  requestAnimationFrame(animateMorph);
+}
+animateMorph();
+
+// ── Page 2 SVG blobs ──────────────────────────────────────
 function makeBlob(cx,cy,r,n,t,amp){
   const pts=[];
   for(let i=0;i<n;i++){
     const a=(i/n)*Math.PI*2;
     const noise=Math.sin(a*2+t*.8)*amp+Math.sin(a*3-t*.5)*amp*.5+Math.sin(a*5+t*1.2)*amp*.25;
-    const rad=r+noise;
-    pts.push([cx+Math.cos(a)*rad,cy+Math.sin(a)*rad]);
+    pts.push([cx+Math.cos(a)*(r+noise),cy+Math.sin(a)*(r+noise)]);
   }
-  return smooth(pts);
-}
-function smooth(pts){
-  const n=pts.length;
+  const s=pts.length;
   let d=`M${pts[0][0].toFixed(1)} ${pts[0][1].toFixed(1)}`;
-  for(let i=0;i<n;i++){
-    const p0=pts[(i-1+n)%n],p1=pts[i],p2=pts[(i+1)%n],p3=pts[(i+2)%n];
+  for(let i=0;i<s;i++){
+    const p0=pts[(i-1+s)%s],p1=pts[i],p2=pts[(i+1)%s],p3=pts[(i+2)%s];
     const cp1x=p1[0]+(p2[0]-p0[0])/6,cp1y=p1[1]+(p2[1]-p0[1])/6;
     const cp2x=p2[0]-(p3[0]-p1[0])/6,cp2y=p2[1]-(p3[1]-p1[1])/6;
     d+=` C${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
@@ -702,44 +687,9 @@ function smooth(pts){
   return d+'Z';
 }
 
-// Sparks
-const sparksG=document.getElementById('sparks');
-const sparkData=[];
-const sparkColors=['#ff3cac','#ffde03','#00f5d4','#ff6b35','#7b2ff7','#00cfff'];
-for(let i=0;i<40;i++){
-  const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
-  const col=sparkColors[Math.floor(Math.random()*sparkColors.length)];
-  c.setAttribute('r',Math.random()*2+.5);
-  c.setAttribute('fill',col);
-  c.setAttribute('opacity',Math.random()*.7+.2);
-  sparksG.appendChild(c);
-  sparkData.push({el:c,x:Math.random()*1400,y:Math.random()*900,vx:(Math.random()-.5)*.5,vy:(Math.random()-.5)*.5,ph:Math.random()*Math.PI*2});
-}
-
-// ── Main animation loop ───────────────────────────────────
 let t=0;
 function loop(){
   t+=0.009;
-
-  // Page 1 blobs
-  const hm1=document.getElementById('hm1');
-  const hm2=document.getElementById('hm2');
-  const hm3=document.getElementById('hm3');
-  if(hm1) hm1.setAttribute('d',makeBlob(280,450,240,18,t,80));
-  if(hm2) hm2.setAttribute('d',makeBlob(1050,250,200,14,t*.7+1,70));
-  if(hm3) hm3.setAttribute('d',makeBlob(700,600,170,12,t*1.3+2,55));
-
-  // Glow drift
-  const g1=document.getElementById('g1');
-  const g2=document.getElementById('g2');
-  const g3=document.getElementById('g3');
-  const g4=document.getElementById('g4');
-  if(g1){g1.setAttribute('cx',200+Math.sin(t*.4)*100);g1.setAttribute('cy',300+Math.cos(t*.3)*70);}
-  if(g2){g2.setAttribute('cx',1100+Math.cos(t*.35)*120);g2.setAttribute('cy',200+Math.sin(t*.5)*80);}
-  if(g3){g3.setAttribute('cx',700+Math.sin(t*.6+1)*90);g3.setAttribute('cy',650+Math.cos(t*.4)*60);}
-  if(g4){g4.setAttribute('cx',900+Math.cos(t*.5+2)*80);g4.setAttribute('cy',500+Math.sin(t*.7)*50);}
-
-  // Page 2 blobs
   const p2m1=document.getElementById('p2m1');
   const p2m2=document.getElementById('p2m2');
   if(p2m1) p2m1.setAttribute('d',makeBlob(350,350,220,16,t*.8,75));
@@ -748,17 +698,6 @@ function loop(){
   const p2g2=document.getElementById('p2g2');
   if(p2g1){p2g1.setAttribute('cx',300+Math.sin(t*.5)*90);p2g1.setAttribute('cy',350+Math.cos(t*.4)*60);}
   if(p2g2){p2g2.setAttribute('cx',1100+Math.cos(t*.4)*100);p2g2.setAttribute('cy',200+Math.sin(t*.6)*70);}
-
-  // Sparks
-  sparkData.forEach(p=>{
-    p.x+=p.vx+Math.sin(t+p.ph)*.4;
-    p.y+=p.vy+Math.cos(t*.7+p.ph)*.4;
-    if(p.x<0)p.x=1400; if(p.x>1400)p.x=0;
-    if(p.y<0)p.y=900;  if(p.y>900)p.y=0;
-    p.el.setAttribute('cx',p.x);
-    p.el.setAttribute('cy',p.y);
-  });
-
   requestAnimationFrame(loop);
 }
 loop();
