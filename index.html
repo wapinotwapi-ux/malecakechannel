@@ -157,8 +157,16 @@ nav {
   opacity:0; animation:fadeUp .8s .7s forwards;
 }.price-now {
   font-family:'Bungee',cursive;
-  font-size:1.3rem; color:var(--c2);
-  text-shadow:0 0 20px rgba(255,222,3,.5);
+  font-size:1.4rem;
+  background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3), var(--c4), var(--c1));
+  background-size: 300%;
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+  animation: priceFlow 2s linear infinite;
+  filter: drop-shadow(0 0 8px rgba(255,222,3,.6));
+}
+@keyframes priceFlow {
+  0%{ background-position:0% 50%; }
+  100%{ background-position:300% 50%; }
 }
 .price-orig {
   font-size:.85rem; color:var(--muted);
@@ -172,8 +180,71 @@ nav {
   vertical-align:middle;
 }
 
+/* Preview link */
+.preview-link {
+  display:inline-block;
+  font-family:'Bungee',cursive;
+  font-size:.75rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  text-decoration:none;
+  padding:14px 28px;
+  border:2px solid var(--c3);
+  color:var(--c3);
+  position:relative;
+  overflow:hidden;
+  transition:all .3s;
+  opacity:0; animation:fadeUp .8s 1s forwards;
+}
+.preview-link::before {
+  content:'';
+  position:absolute; inset:0;
+  background:var(--c3);
+  transform:translateX(-100%);
+  transition:transform .3s ease;
+  z-index:-1;
+}
+.preview-link:hover::before { transform:translateX(0); }
+.preview-link:hover { color:#000; }
 
-.hero-btns {
+/* Responsive — full device support */
+@media(max-width:1024px){
+  nav { padding:16px 32px; }
+  .hero-inner { padding:28px 24px; gap:24px; }
+  .cards-section { padding:60px 32px; }
+  .cta-section { padding:80px 40px; }
+}
+@media(max-width:768px){
+  nav { padding:14px 20px; }
+  .nav-logo { font-size:1.1rem; }
+  .hero-inner { padding:20px 16px; gap:20px; width:100%; }
+  .morph-title { font-size:clamp(2.5rem,14vw,5rem); }
+  .morph-sub { font-size:clamp(.9rem,4vw,1.4rem); letter-spacing:.2em; }
+  .raya-text { font-size:clamp(.55rem,2.5vw,.75rem); letter-spacing:.1em; }
+  .info-list { padding:18px 20px; max-width:100%; }
+  .info-item { font-size:.75rem; }
+  .hero-btns { gap:12px; }
+  .big-btn { padding:14px 24px; font-size:.7rem; }
+  .badges { gap:8px; }
+  .badge { font-size:.55rem; padding:5px 12px; }
+  .preview-link { font-size:.65rem; padding:12px 20px; }
+  .cards-section { padding:40px 16px; grid-template-columns:1fr; }
+  .cta-section { padding:60px 20px; }
+  .video-wrap { max-width:100%; }
+  .ticker-item { font-size:.6rem; padding:0 20px; }
+}
+@media(max-width:480px){
+  .morph-title { font-size:clamp(2.2rem,16vw,4rem); }
+  .hero-inner { padding:16px 12px; gap:16px; }
+  .info-list { padding:16px; }
+  .info-item { font-size:.7rem; letter-spacing:.04em; }
+  .big-btn { padding:12px 20px; font-size:.65rem; width:100%; text-align:center; }
+  .hero-btns { flex-direction:column; width:100%; max-width:280px; }
+  .price-now { font-size:1.2rem; }
+  .cards-section { padding:30px 12px; gap:16px; }
+  .card { padding:24px 18px; }
+  .p2-content { padding:40px 20px; }
+}
   display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
   opacity:0; animation:fadeUp .8s .9s forwards;
 }
@@ -213,15 +284,6 @@ nav {
 .badge:nth-child(2) { background:rgba(0,245,212,.15); border:1px solid var(--c3); color:var(--c3); }
 .badge:nth-child(3) { background:rgba(255,222,3,.15); border:1px solid var(--c2); color:var(--c2); }
 .badge:nth-child(4) { background:rgba(123,47,247,.15); border:1px solid var(--c5); color:var(--c5); }
-
-/* Scroll arrow */
-.scroll-arrow {
-  position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
-  display:flex; flex-direction:column; align-items:center; gap:6px;
-  opacity:0; animation:fadeUp 1s 1.5s forwards; z-index:10; cursor:none;
-}
-.scroll-arrow span { font-size:.55rem; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); }
-.arrow-line { width:1px; height:40px; background:linear-gradient(to bottom,var(--c3),transparent); animation:pulse 2s infinite; }
 
 /* ─── PAGE 2: ABOUT ───────────────────────── */
 #page2 { padding-top:80px; background:var(--bg); }
@@ -390,12 +452,7 @@ nav {
 }
 .video-fallback:hover { color:var(--c3); border-color:var(--c3); }
 
-/* Responsive */
-@media(max-width:600px) {
-  nav { padding:16px 24px; }
-  .cards-section { padding:60px 24px; }
-  .cta-section { padding:60px 24px; }
-}
+
 </style>
 </head>
 <body>
@@ -431,6 +488,10 @@ nav {
         <div class="info-item">- LEGIT <strong>(NOT A SCAM)</strong></div>
       </div>
 
+      <a href="https://t.me/cakechannelpreview" target="_blank" class="preview-link">
+        👁 PREVIEW CHANNEL HERE
+      </a>
+
       <!-- Video preview -->
       <div class="video-wrap">
         <iframe
@@ -459,10 +520,6 @@ nav {
 
     </div>
 
-    <div class="scroll-arrow">
-      <span>Scroll</span>
-      <div class="arrow-line"></div>
-    </div>
   </section>
 
   <!-- Ticker -->
